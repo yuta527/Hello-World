@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="myapp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="mytodo.js"></script>
+    <title>ToDo</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+  .done-true {
+    color:gray;
+    text-decoration:line-through;
+  }
+  .done-false {
+    color:red;
+  }
+  </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".target">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="">TODOList</a>
+      </div>
+      <div class="collapse navbar-nav navbar-collapse target">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="">Page 1</a></li>
+          <li><a href="">Page 2</a></li>
+          <li><a href="">Page 3</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div id="header" style="background:blue;padding:18px 0;"></div>
+    <div class="container">
+    <h1>ToDoList</h1>
+
+    <div ng-controller="MainCtrl">
+    <p>{{today|date:'fullDate'}}</p>
+    <p>Finished Task: {{getDoneCount()}} / {{tasks.length}}
+    <button ng-click="deleteDone()" type="button" class="btn btn-success">Delete Finished</button></p>
+    <ul>
+      <table class="table table-striped table-hover">
+
+            <li ng-repeat="task in tasks">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="task.done" value="">
+                  <span class="done-{{task.done}}">{{$index+1}}.　{{task.body}}</span><!--done-true or done-false-->
+                  <a href ng-click="tasks.splice($index,1)">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                </label>
+              </div>
+            </li>
+
+    </table>
+    </ul>
+    <form novalidate ng-submit="addNew()" name="myForm">
+      <div class="form-group">
+      <input type="text" ng-model="newTaskBody" name="name" required>{{newTaskBody.length}}
+      <span ng-show="myForm.name.$error.required">Enter your tasks.</span>
+      <span ng-hide="myForm.name.$error.required">letters.</span></br>
+      <input type="submit" value="add" ng-hide="myForm.name.$error.required"><!--If form is emp,this button would be hided.-->
+    </div>
+    </form>
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+      $('.carousel').carousel({
+        interval: 3000
+        // wrap:true
+      })
+      $().alert('close')
+    </script>
+  </div>
+  <div id="footer" style="background:blue;padding:10% 0;margin-bottom:0;">footer</div>
+
+  </body>
+</html>
